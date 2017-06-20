@@ -17,10 +17,11 @@ function showMovie(title) {
       if (!movie) return;
 
       $("#title").text(title);
-//      $("#poster").attr("src", "http://neo4j-contrib.github.io/developer-resources/language-guides/assets/posters/" + movie.title + ".jpg");
+      $("#poster").attr("src", "http://neo4j-contrib.github.io/developer-resources/language-guides/assets/img/logo-white.svg");
       var entityDetailTable = $("table#DetailedView tbody").empty();
-      movie.cast.forEach(cast => {
-    	  $("<tr><td class='movie'>" + cast.name + "</td><td>" + cast.category + "</td><td>" +movie.relationship + "</td></td>"+ movie.properties+"</td></tr>").appendTo(entityDetailTable)
+      movie.forEach(m => {
+    	  console.log(m)
+    	  $("<tr><td class='movie'>" + m.name + "</td><td>" +m.category + "</td><td>" +m.relationship + "</td><td>"+ m.properties+"</td></tr>").appendTo(entityDetailTable)
 
           .click(function() {
             showClient($(this).find("td.movie").text());
@@ -28,6 +29,8 @@ function showMovie(title) {
       });
     }, "json");
 }
+
+
 
 function showConnections(name,type) {
 	  /*api
@@ -51,6 +54,7 @@ function search() {
     .then(movies => {
       var t = $("table#results tbody").empty();
       var client = $("table#UserResults tbody").empty();
+      var others = $("table#OtherResults tbody").empty();
       //alert(movies.length);
       if (movies) {
 
@@ -70,14 +74,23 @@ function search() {
                     $("<tr><td class='movie'>" + movie.name + "</td><td>" + movie.established + "</td><td>" +movie.Name + "</td></tr>").appendTo(client)
 
                     .click(function() {
-                      showClient($(this).find("td.movie").text());
+                    	imageURL = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png";
+                    	showMovie($(this).find("td.movie").text());
                     })
         	        break;
         	    	}
-        	    case "Product":           	       
+        	    case "Product":      
+        	    {
+                    $("<tr><td class='movie'>" + movie.name + "</td><td>" + movie.launched + "</td><td>" +movie.Name + "</td></tr>").appendTo(t)
+
+                    .click(function() {
+                      showMovie($(this).find("td.movie").text());
+                    })
+                    break;
+        	    	}
         	    default:
         	    	{
-                    $("<tr><td class='movie'>" + movie.name + "</td><td>" + movie.launched + "</td><td>" +movie.Name + "</td></tr>").appendTo(t)
+                    $("<tr><td class='movie'>" + movie.name + "</td><td>" + nodeType+"</td><td>" + movie.description + "</td></tr>").appendTo(others)
 
                     .click(function() {
                       showMovie($(this).find("td.movie").text());

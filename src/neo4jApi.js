@@ -94,22 +94,30 @@ function getMovie(title) {
 UNWIND FILTER(x IN NODES(p) WHERE x <> n) AS node
 RETURN DISTINCT node.name,labels(node),type(r),r order by labels(node);
    */
-  console.log("coming here");
   return session
   .run(
   		"MATCH p=(n { name:{title} })-[r]-() \
 UNWIND FILTER(x IN NODES(p) WHERE x <> n) AS node \
-RETURN DISTINCT node.name as title,collect([node.name,labels(node),type(r),properties(r)]) AS cast",{title})
+RETURN DISTINCT node.name as title,node.name as name,labels(node) as label,type(r) as relType ,properties(r) as relDetail",{title})
+    .then(result => {
+      session.close();
 
-  .then(result => {
-    session.close();
+      return result.records.map(record => {
+          var mapV = record.get('relDetail');
+          var relationshipDetail ="";
+          Object.keys(mapV).forEach(key => {
 
-    if (_.isEmpty(result.records))
-      return null;
+              relationshipDetail += relationshipDetail +key + ": " +mapV[key];
+              
+          });
+          console.log("The Key1: " + relationshipDetail);
+          return new EntityNodeRelationshipDetail(record.get('title'), record.get('name'), 
+    	    		record.get('label'),record.get('relType'),relationshipDetail);
+      });
 
-    var record = result.records[0];
-    return new EntityNodeRelationshipDetail(record.get('title'), record.get('cast'));
-  })
+    	  
+    })
+
   .catch(error => {
     session.close();
     throw error;

@@ -1,7 +1,7 @@
-# Neo4j Movies Example Application - `neo4j-driver` Edition
+# Neo4j Navistar Example Application - `neo4j-driver` Edition
 
 ![image of application](./img/demo.png)
-
+This codes has been taken as is from https://github.com/neo4j-examples/movies-javascript-bolt
 ## Stack
 
 * [Neo4j Bolt JavaScript Driver](https://github.com/neo4j/neo4j-javascript-driver)
@@ -20,12 +20,12 @@ $ npm install
 ### Run locally
 
 * Start Neo4j ([Download & Install](http://neo4j.com/download)) locally and open the [Neo4j Browser](http://localhost:7474). 
-* Install the Movies dataset with `:play movies`, click the statement, and hit the triangular "Run" button.
+* To do: Install the Movies dataset with `:play <something>`, click the statement, and hit the triangular "Run" button.
 * Clone this project from GitHub
 * Run the App inside the Webpack Dev Server:
 
 ```bash
-# run in developement mode (refreshes the app on source code changes)
+# run in development mode (refreshes the app on source code changes)
 $ npm run dev
 
 # builds the release version with client assets in "build" directory
