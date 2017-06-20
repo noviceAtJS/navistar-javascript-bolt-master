@@ -1,0 +1,14 @@
+//get all the nodes having P
+match( n)
+where n.name contains "P"
+return   distinct n
+
+//nodes having a relation
+match( n)-[r]-()
+where n.name contains "P"
+return   distinct n
+
+//get all nodes and relationhip for a given node
+MATCH p=(n { name:"PQSR" })-[r]-()
+UNWIND FILTER(x IN NODES(p) WHERE x <> n) AS node
+RETURN DISTINCT node.name,labels(node),r,type(r);
