@@ -1,4 +1,4 @@
-# Neo4j Navistar Example Application - `neo4j-driver` Edition
+# Neo4j NavigationStar Example Application - `neo4j-driver` Edition
 
 ![image of application](./img/demo.png)
 This codes has been taken as is from https://github.com/neo4j-examples/movies-javascript-bolt
